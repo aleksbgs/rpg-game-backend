@@ -1,16 +1,19 @@
 import express from 'express';
-import { initializeRedis } from './config/cache.config';
+import {initializeRedis}  from './config/cache.config';
 import characterRoutes from './routes/character.routes';
-import {AppDataSource} from "./config/database.config";
+import {AppDataSource,InitializeDatabase} from "./config/database.config";
 
 const app = express();
 app.use(express.json());
 
 async function start() {
     try {
-        await AppDataSource.initialize();
+        await InitializeDatabase();
+        await initializeRedis();
         await AppDataSource.runMigrations();
         console.log('Database Characters initialized');
+
+        app.use('/api', characterRoutes);
 
         app.listen(3002, () => {
             console.log('Character Service running on port 3002');

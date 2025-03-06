@@ -8,7 +8,7 @@ import { User } from '../entity/User';
 import { UserRole, JwtPayload } from '../types/auth.types';
 import { CharacterCreateRequest, CharacterResponse, CharacterListResponse, ItemCreateRequest, ItemResponse, ItemGrantRequest, ItemGiftRequest, CharacterJwtPayload } from '../types/character.types';
 import { JWT_CONFIG } from '../config/jwt.config';
-import { cache } from '../config/cache.config';
+import { redisClient } from '../config/cache.config'; // Updated import
 import { Logger } from '../utils/logger';
 
 class CharacterService {
@@ -61,8 +61,11 @@ class CharacterService {
 
     async getCharacter(id: string, userPayload: JwtPayload): Promise<CharacterResponse> {
         const cacheKey = `character:${id}`;
-        const cached = await cache.get<CharacterResponse>(cacheKey);
-        if (cached) return cached;
+        const cached = await redisClient.get(cacheKey); // Use Redis get
+        if (cached) {
+            this.logger.info(`Cache hit for character: ${id}`);
+            return JSON.parse(cached) as CharacterResponse;
+        }
 
         const character = await this.characterRepository.findOne({
             where: { id },
@@ -75,7 +78,8 @@ class CharacterService {
         }
 
         const response = this.mapToResponse(character);
-        await cache.set(cacheKey, response);
+        await redisClient.setEx(cacheKey, 300, JSON.stringify(response)); // Use Redis setEx (5 minutes TTL)
+        this.logger.info(`Cache miss - stored character: ${id}`);
         return response;
     }
 
@@ -110,7 +114,7 @@ class CharacterService {
 
         character.items.push(item);
         await this.characterRepository.save(character);
-        await cache.del(`character:${character.id}`);
+        await redisClient.del(`character:${character.id}`); // Use Redis del
         this.logger.info(`Item ${item.name} granted to character ${character.name}`);
     }
 
@@ -127,13 +131,11 @@ class CharacterService {
         toCharacter.items.push(item);
         await this.characterRepository.save([fromCharacter, toCharacter]);
         await Promise.all([
-            cache.del(`character:${fromCharacter.id}`),
-            cache.del(`character:${toCharacter.id}`)
+            redisClient.del(`character:${fromCharacter.id}`),
+            redisClient.del(`character:${toCharacter.id}`)
         ]);
         this.logger.info(`Item ${item.name} gifted from ${fromCharacter.name} to ${toCharacter.name}`);
     }
-
-
 
     private generateCharacterToken(character: Character, role: UserRole): string {
         const payload: CharacterJwtPayload = {
@@ -146,12 +148,12 @@ class CharacterService {
 
     verifyCharacterToken(token: string): CharacterJwtPayload {
         try {
-            return jwt.verify(token, JWT_CONFIG.secret) as CharacterJwtPayload;
+            return jwt.verify(token, JWT_CONFIG.characterSecret) as CharacterJwtPayload;
         } catch (error) {
+            this.logger.error(`Invalid character token: ${error}`);
             throw new Error('Invalid character token');
         }
     }
-
 
     private mapToResponse(character: Character): CharacterResponse {
         const itemBonuses = character.items.reduce((acc, item) => ({
