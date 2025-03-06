@@ -1,20 +1,39 @@
-// account-service/src/entity/User.ts
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
-@Entity('users')
-export class User extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id!: number;
+// UserRole enum for JWT token roles
+export enum UserRole {
+    USER = 'User',
+    GAME_MASTER = 'GameMaster'
+}
+
+@Entity()
+export class User {
+    @PrimaryGeneratedColumn('uuid')
+    id!: string;
 
     @Column({ unique: true })
     username!: string;
 
     @Column()
-    password!: string;
+    password!: string; // Hashed in production using bcrypt
 
-    @Column({ type: 'varchar', enum: ['User', 'GameMaster'] })
-    role!: string;
+    @Column({
+        type: 'enum',
+        enum: UserRole,
+        default: UserRole.USER
+    })
+    role!: UserRole;
 
-    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    @CreateDateColumn()
     createdAt!: Date;
+
+    // Password hashing and comparison methods
+    async hashPassword(): Promise<void> {
+        this.password = await bcrypt.hash(this.password, 10);
+    }
+
+    async comparePassword(candidatePassword: string): Promise<boolean> {
+        return bcrypt.compare(candidatePassword, this.password);
+    }
 }

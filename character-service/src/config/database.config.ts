@@ -1,6 +1,9 @@
-// account-service/src/data-source.ts
 import { DataSource } from 'typeorm';
-import { User } from '../entities/User';
+import { User } from '../entity/User';
+import { Character } from '../entity/Character';
+import { Class } from '../entity/Class';
+import { Item } from '../entity/Item';
+
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -8,11 +11,10 @@ export const AppDataSource = new DataSource({
     port: Number(process.env.DB_PORT) || 5432,
     username: process.env.DB_USER || "user",
     password: process.env.DB_PASSWORD || "password",
-    database: process.env.DB_NAME || "rpg_db",
+    database: process.env.DB_NAME_CHARACTER_SERVICE || "character_db",
     synchronize: true,
     logging: true,
-    entities: [User],
+    entities: [User,Character,Class,Item],
     migrations: ["src/database/migrations/*.ts"],
     subscribers: [],
 });
-

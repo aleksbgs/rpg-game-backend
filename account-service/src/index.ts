@@ -1,6 +1,6 @@
 // account-service/src/index.ts
 import express from 'express';
-import { AppDataSource } from './config/database';
+import { AppDataSource } from './config/database.config';
 import authRoutes from './routes/authRoutes';
 
 const app = express();

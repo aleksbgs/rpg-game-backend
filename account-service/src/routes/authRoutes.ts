@@ -1,10 +1,13 @@
 import { Router } from 'express';
-import { AuthController } from '../controllers/AuthController';
+import { AuthController } from '../controllers/authController'; // Adjust path case as needed
 
 const router = Router();
 
-// Authentication routes
-router.post('/register', AuthController.register);
-router.post('/login', AuthController.login);
+// Instantiate the AuthController
+const authController = new AuthController();
+
+// Define authentication routes
+router.post('/register', authController.register.bind(authController));
+router.post('/login', authController.login.bind(authController));
 
 export default router;
