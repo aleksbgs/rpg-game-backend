@@ -120,5 +120,4 @@ networks:
 
 volumes:
   postgres_data:
-  postgres_data_1:
   redis_data:
