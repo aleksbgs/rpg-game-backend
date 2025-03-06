@@ -9,7 +9,7 @@ import { Client } from 'pg'; // Import 'pg' for raw database connection
 const schemaName = process.env.DB_CHARACTER_SCHEMA || 'character_schema';
 
 // Manually create schema before initializing TypeORM
-async function ensureSchemaExists() {
+async function ensureCharacterSchemaExists() {
     const client = new Client({
         host: process.env.DB_HOST || 'localhost',
         port: parseInt(process.env.DB_PORT || '5432'),
@@ -46,7 +46,7 @@ export const AppDataSource = new DataSource({
 export async function InitializeDatabase() {
     try {
         // Step 1: Ensure the schema exists
-        await ensureSchemaExists();
+        await ensureCharacterSchemaExists();
 
         // Step 2: Initialize TypeORM after the schema exists
         await AppDataSource.initialize();

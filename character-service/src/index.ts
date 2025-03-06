@@ -19,7 +19,7 @@ async function start() {
             console.log('Character Service running on port 3002');
         });
     } catch (error) {
-        console.error('Error starting service:', error);
+        console.error('Error starting character service:', error);
         process.exit(1);
     }
 }
