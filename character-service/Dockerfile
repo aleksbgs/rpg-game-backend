@@ -29,8 +29,8 @@ COPY --from=builder /app/dist ./dist
 # Install production dependencies only
 RUN npm ci --only=production
 
-# Expose port (match your app's port, 3001 from your example)
-EXPOSE 3001
+# Expose port (match your app's port, 3002 from your example)
+EXPOSE 3002
 
 # Environment variables (optional, can be set via docker run or .env)
 ENV NODE_ENV=production
