@@ -36,7 +36,7 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_USER || "user",
     password: process.env.DB_PASSWORD || "password",
     database: process.env.DB_NAME || "rpg_db",
-    synchronize: false,
+    synchronize: true,
     logging: false,
     entities: [User],
     migrations: ["src/database/migrations/*.ts"],
