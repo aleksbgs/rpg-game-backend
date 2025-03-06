@@ -34,7 +34,7 @@ export const AppDataSource = new DataSource({
     database: process.env.DB_NAME || 'rpg_db',
     schema: schemaName, // Ensure schema is set correctly
     synchronize: true, // Set to false in production
-    logging: process.env.NODE_ENV !== 'production',
+    logging: process.env.NODE_ENV === 'production',
     entities: [Character, User, Class, Item],
     migrations: ['src/migrations/*.ts'],
     migrationsRun: true, // Automatically run migrations on startup

@@ -22,6 +22,7 @@ export const authenticateToken = (
 
     try {
         const payload = jwt.verify(token, JWT_CONFIG.secret) as JwtPayload;
+        console.log("token",payload);
         (req as AuthenticatedRequest).user = payload;
         next();
     } catch (error) {
