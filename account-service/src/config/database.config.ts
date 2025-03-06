@@ -1,6 +1,25 @@
 import { DataSource } from 'typeorm';
 import { User } from '../entities/User';
-import { Client } from 'pg'; // You'll need to install 'pg' package
+import { Client } from 'pg';
+
+const schemaName = process.env.DB_ACCOUNT_SCHEMA || 'account_schema';
+
+// Manually create schema before initializing TypeORM
+async function ensureAccountSchemaExists() {
+
+    const client = new Client({
+        host: process.env.DB_HOST || 'localhost',
+        port: parseInt(process.env.DB_PORT || '5432'),
+        user: process.env.DB_USERNAME || 'user',
+        password: process.env.DB_PASSWORD || 'password',
+        database: process.env.DB_NAME || 'rpg_db',
+    });
+
+    await client.connect();
+    await client.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
+    await client.end();
+    console.log(`✅ Schema "${schemaName}" ensured in the database.`);
+}
 
 // Export the DataSource configuration
 export const AppDataSource = new DataSource({
@@ -10,9 +29,39 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_USERNAME || 'user',
     password: process.env.DB_PASSWORD || 'password',
     database: process.env.DB_NAME || 'rpg_db',
-    synchronize: true, // Set to false since we'll use migrations
+    schema: schemaName, // Ensure schema is set correctly
+    synchronize: false, // Set to false in production
     logging: process.env.NODE_ENV !== 'production',
     entities: [User],
     migrations: ['src/migrations/*.ts'],
     migrationsRun: true, // Automatically run migrations on startup
+    extra: {
+        schema: schemaName, // Ensure schema is set inside extra
+    },
 });
+
+export async function InitializeDatabase() {
+    try {
+        // Step 1: Ensure the schema exists
+        await ensureAccountSchemaExists();
+
+        // Step 2: Initialize TypeORM after the schema exists
+        await AppDataSource.initialize();
+
+        if (process.env.NODE_ENV === 'production') {
+            await AppDataSource.runMigrations();
+        }
+
+        console.log('✅ Account Service database initialized');
+    } catch (error) {
+        console.error('❌ Error initializing Account Service database:', error);
+        throw error;
+    }
+}
+
+export async function CloseDatabase() {
+    if (AppDataSource.isInitialized) {
+        await AppDataSource.destroy();
+        console.log('✅ Account Service database connection closed');
+    }
+}
