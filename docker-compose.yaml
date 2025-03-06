@@ -19,6 +19,24 @@ services:
       retries: 5
     networks:
       - app-network
+  postgres_character:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_CHARACTER_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_1:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "${DB_USER}", "-d", "${POSTGRES_CHARACTER_DB}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
 
   redis:
     image: redis:7
@@ -71,17 +89,17 @@ services:
     ports:
       - "3002:3002"
     depends_on:
-      postgres:
+      postgres_character:
         condition: service_healthy
       redis:
         condition: service_healthy
     environment:
       NODE_ENV: ${NODE_ENV}
-      DB_HOST: postgres
-      DB_PORT: 5432
+      DB_HOST: postgres_character
+      DB_PORT: 5433
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
-      DB_NAME: ${DB_NAME}
+      DB_NAME: ${POSTGRES_CHARACTER_DB}
       REDIS_HOST: redis
       REDIS_PORT: 6379
       REDIS_PASSWORD: ${REDIS_PASSWORD}
@@ -119,4 +137,5 @@ networks:
 
 volumes:
   postgres_data:
+  postgres_data_1:
   redis_data:

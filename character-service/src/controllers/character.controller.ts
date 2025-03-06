@@ -1,0 +1,120 @@
+import { Response } from 'express';
+import { characterService } from '../services/character.service';
+import { AuthenticatedRequest } from '../middleware/auth.middlerare'; // For user token
+import { CharacterAuthenticatedRequest } from '../middleware/character.middleware'; // For character token
+import {
+    CharacterCreateRequest,
+    ItemCreateRequest,
+    ItemGrantRequest,
+    ItemGiftRequest,
+} from '../types/character.types';
+
+export class CharacterController {
+    // POST /api/character - Create a new character
+    async create(req: AuthenticatedRequest, res: Response) {
+        try {
+            const request: CharacterCreateRequest = req.body;
+            const userPayload = req.user!; // JwtPayload from authenticateToken
+            const characterToken = await characterService.create(request, userPayload);
+            res.status(201).json({token: characterToken});
+        } catch (error) {
+            res.status(400).json({error: error});
+        }
+    }
+
+    // GET /api/character - List all characters (GameMaster only)
+    async getAll(req: AuthenticatedRequest, res: Response) {
+        try {
+            const userPayload = req.user!;
+            const characters = await characterService.getAll(userPayload);
+            res.json(characters);
+        } catch (error) {
+            res.status(403).json({error: error});
+        }
+    }
+
+    // GET /api/character/:id - Get character details
+    async get(req: AuthenticatedRequest, res: Response) {
+        try {
+            const id = req.params.id;
+            const userPayload = req.user!;
+            const character = await characterService.getCharacter(id, userPayload);
+            res.json(character);
+        } catch (error) {
+            res.status(404).json({error: error});
+        }
+    }
+
+    // POST /api/items - Create a new item (GameMaster only)
+    async createItem(req: AuthenticatedRequest, res: Response) {
+        try {
+            const request: ItemCreateRequest = req.body;
+            const userPayload = req.user!;
+            const itemId = await characterService.createItem(request, userPayload);
+            res.status(201).json({itemId});
+        } catch (error) {
+            res.status(403).json({error: error});
+        }
+    }
+
+    // GET /api/items - List all items (GameMaster only)
+    async getItems(req: AuthenticatedRequest, res: Response) {
+        try {
+            const userPayload = req.user!;
+            const items = await characterService.getItems(userPayload);
+            res.json(items);
+        } catch (error) {
+            res.status(403).json({error: error});
+
+        }
+    }
+
+    // GET /api/items/:id - Get item details
+    async getItem(req: AuthenticatedRequest, res: Response) {
+        try {
+            const id = req.params.id;
+            const item = await characterService.getItem(id);
+            res.json(item);
+        } catch (error) {
+            res.status(404).json({error: error});
+        }
+    }
+
+    // POST /api/items/grant - Grant an item to a character (GameMaster only)
+    async grantItem(req: AuthenticatedRequest, res: Response) {
+        try {
+            const request: ItemGrantRequest = req.body;
+            const userPayload = req.user!;
+            await characterService.grantItem(request, userPayload);
+            res.status(204).send();
+        } catch (error) {
+            res.status(400).json({error: error});
+        }
+    }
+
+    // POST /api/items/gift - Gift an item from one character to another
+    async giftItem(req: AuthenticatedRequest, res: Response) {
+        try {
+            const request: ItemGiftRequest = req.body;
+            const userPayload = req.user!;
+            await characterService.giftItem(request, userPayload);
+            res.status(204).send();
+        } catch (error) {
+            res.status(400).json({error: error});
+        }
+    }
+
+    // Bonus: GET /api/character/me - Get current character details (using character token)
+    async getCurrentCharacter(req: CharacterAuthenticatedRequest, res: Response) {
+        try {
+            const characterPayload = req.character!; // CharacterJwtPayload from authenticateCharacterToken
+            const character = await characterService.getCharacter(characterPayload.characterId, {
+                userId: characterPayload.ownerId,
+                role: characterPayload.role,
+            });
+            res.json(character);
+        } catch (error) {
+            res.status(404).json({error: error});
+        }
+    }
+}
