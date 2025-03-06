@@ -1,16 +1,20 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+// account-service/src/entity/User.ts
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 
-@Entity()
-export class User {
+@Entity('users')
+export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column({ type: "varchar", unique: true })
+    @Column({ unique: true })
     username!: string;
 
-    @Column({ type: "varchar" })
+    @Column()
     password!: string;
 
-    @Column({ type: "enum", enum: ["User", "GameMaster"], default: "User" })
-    role!: "User" | "GameMaster";
+    @Column({ type: 'varchar', enum: ['User', 'GameMaster'] })
+    role!: string;
+
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt!: Date;
 }

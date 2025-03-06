@@ -1,138 +1,91 @@
-import { Request, Response, NextFunction } from "express";
-import { StatusCodes } from "http-status-codes";
-import { z } from "zod";
-import AuthService from "../services/AuthService"; // Assuming this exists
+// account-service/src/controller/AuthController.ts
+import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import { AppDataSource } from '../config/database';
+import { User } from '../entities/User';
 
-// Validation schemas matching User entity
-const registerSchema = z.object({
-    username: z.string()
-        .min(3, "Username must be at least 3 characters")
-        .max(255, "Username must not exceed 255 characters"), // Default varchar length
-    password: z.string()
-        .min(8, "Password must be at least 8 characters"),
-    role: z.enum(["User", "GameMaster"]).default("User"),
-});
-
-const loginSchema = z.object({
-    username: z.string().min(3).max(255),
-    password: z.string().min(8),
-});
-
-// Error response interface
-interface ErrorResponse {
-    success: false;
-    message: string;
-    errors?: unknown;
+interface AuthRequest extends Request {
+    user?: { id: number; role: string };
 }
 
-class AuthController {
-    // Validation middleware
-    private static validate(schema: z.ZodSchema) {
-        return (req: Request, res: Response, next: NextFunction) => {
-            try {
-                schema.parse(req.body);
-                next();
-            } catch (error) {
-                if (error instanceof z.ZodError) {
-                    res.status(StatusCodes.BAD_REQUEST).json({
-                        success: false,
-                        message: "Validation failed",
-                        errors: error.errors,
-                    } as ErrorResponse);
-                }
-            }
-        };
-    }
+export class AuthController {
 
     static async register(req: Request, res: Response): Promise<void> {
         try {
-            const { username, password, role } = registerSchema.parse(req.body);
+            const { username, password, role = 'User' } = req.body;
 
-            const user = await AuthService.register(username, password, role);
-
-            res.status(StatusCodes.CREATED).json({
-                success: true,
-                data: {
-                    id: user.id,
-                    username: user.username,
-                    role: user.role,
-                },
-                message: "User registered successfully",
-            });
-        } catch (error) {
-            if (error instanceof z.ZodError) {
-                // Validation errors are handled by middleware, but keeping this as fallback
-                res.status(StatusCodes.BAD_REQUEST).json({
-                    success: false,
-                    message: "Validation failed",
-                    errors: error.errors,
-                } as ErrorResponse);
+            // Validate input
+            if (!username || !password) {
+                res.status(400).json({ message: 'Username and password are required' });
                 return;
             }
 
-            const err = error as Error;
-            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-                success: false,
-                message: err.message || "Registration failed",
-            } as ErrorResponse);
+            const existingUser = await AppDataSource.getRepository(User).findOneBy({ username });
+            if (existingUser) {
+                res.status(400).json({ message: 'Username already taken' });
+                return;
+            }
+
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const user = new User();
+            user.username = username;
+            user.password = hashedPassword;
+            user.role = role;
+
+            await AppDataSource.manager.save(user);
+
+            const token = jwt.sign(
+                { id: user.id, role: user.role },
+                process.env.JWT_SECRET!,
+                { expiresIn: '1h' }
+            );
+
+            res.status(201).json({ token, user: { id: user.id, username: user.username, role: user.role } });
+        } catch (error) {
+            console.error('Registration error:', error);
+            res.status(500).json({ message: 'Internal server error' });
         }
     }
 
     static async login(req: Request, res: Response): Promise<void> {
         try {
-            const { username, password } = loginSchema.parse(req.body);
+            const { username, password } = req.body;
 
-            const result = await AuthService.login(username, password);
-
-            if (!result) {
-                res.status(StatusCodes.UNAUTHORIZED).json({
-                    success: false,
-                    message: "Invalid credentials",
-                } as ErrorResponse);
+            if (!username || !password) {
+                res.status(400).json({ message: 'Username and password are required' });
                 return;
             }
 
-            res.status(StatusCodes.OK).json({
-                success: true,
-                data: {
-                    user: {
-                        id: result.user.id,
-                        username: result.user.username,
-                        role: result.user.role,
-                    },
-                    // Assuming AuthService might return a token in a real implementation
-                    token: result.accessToken || "placeholder-token",
-                },
-                message: "Login successful",
+            const user = await AppDataSource.getRepository(User).findOneBy({ username });
+            if (!user) {
+                res.status(401).json({ message: 'Invalid credentials' });
+                return;
+            }
+
+            const isPasswordValid = await bcrypt.compare(password, user.password);
+            if (!isPasswordValid) {
+                res.status(401).json({ message: 'Invalid credentials' });
+                return;
+            }
+
+            const token = jwt.sign(
+                { id: user.id, role: user.role },
+                process.env.JWT_SECRET!,
+                { expiresIn: '1h' }
+            );
+
+            res.json({
+                token,
+                user: {
+                    id: user.id,
+                    username: user.username,
+                    role: user.role
+                }
             });
         } catch (error) {
-            if (error instanceof z.ZodError) {
-                res.status(StatusCodes.BAD_REQUEST).json({
-                    success: false,
-                    message: "Validation failed",
-                    errors: error.errors,
-                } as ErrorResponse);
-                return;
-            }
-
-            const err = error as Error;
-            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-                success: false,
-                message: err.message || "Login failed",
-            } as ErrorResponse);
+            console.error('Login error:', error);
+            res.status(500).json({ message: 'Internal server error' });
         }
     }
-
-    // Route handlers with middleware
-    static registerHandler = [
-        AuthController.validate(registerSchema),
-        AuthController.register,
-    ];
-
-    static loginHandler = [
-        AuthController.validate(loginSchema),
-        AuthController.login,
-    ];
 }
-
-export default AuthController;
