@@ -16,9 +16,9 @@ async function ensureAccountSchemaExists() {
     });
 
     await client.connect();
-    await client.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
+    let result = await client.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
     await client.end();
-    console.log(`✅ Schema "${schemaName}" ensured in the database.`);
+    console.log(`✅ Schema "${schemaName}" ensured in the database.#{result}`);
 }
 
 // Export the DataSource configuration
@@ -30,7 +30,7 @@ export const AppDataSource = new DataSource({
     password: process.env.DB_PASSWORD || 'password',
     database: process.env.DB_NAME || 'rpg_db',
     schema: schemaName, // Ensure schema is set correctly
-    synchronize: false, // Set to false in production
+    synchronize: true, // Set to false in production
     logging: process.env.NODE_ENV !== 'production',
     entities: [User],
     migrations: ['src/migrations/*.ts'],

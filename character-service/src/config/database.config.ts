@@ -33,7 +33,7 @@ export const AppDataSource = new DataSource({
     password: process.env.DB_PASSWORD || 'password',
     database: process.env.DB_NAME || 'rpg_db',
     schema: schemaName, // Ensure schema is set correctly
-    synchronize: false, // Set to false in production
+    synchronize: true, // Set to false in production
     logging: process.env.NODE_ENV !== 'production',
     entities: [Character, User, Class, Item],
     migrations: ['src/migrations/*.ts'],
