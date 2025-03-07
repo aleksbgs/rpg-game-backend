@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany ,ManyToMany,JoinTable} from 'typeorm';
 import { Character } from './Character';
+import { Item } from './Item';
 
 // UserRole enum to match Account Service requirements
 export enum UserRole {
@@ -12,7 +13,6 @@ export class User {
     @PrimaryGeneratedColumn('uuid')
     id!: string;
 
-    @Column({ unique: true })
     username!: string;
 
     @Column()
@@ -31,4 +31,8 @@ export class User {
     // One-to-Many relationship with Character (users can own multiple characters)
     @OneToMany(() => Character, character => character.createdBy)
     characters!: Character[];
+
+    @ManyToMany(() => Item)
+        @JoinTable()
+        items!: Item[];
 }

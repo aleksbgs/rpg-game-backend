@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column,JoinTable,ManyToMany } from 'typeorm';
+import { User } from './User';
 
 @Entity()
 export class Item {
@@ -22,4 +23,8 @@ export class Item {
 
     @Column({ default: 0 })
     bonusFaith!: number;
+
+    @ManyToMany(() => User)
+    @JoinTable()
+    users!: User[];
 }
