@@ -13,26 +13,27 @@ export class User {
     @PrimaryGeneratedColumn('uuid')
     id!: string;
 
-    username!: string;
+    @Column()
+    username?: string;
 
     @Column()
-    password!: string; // In production, this should be hashed (e.g., with bcrypt)
+    userId?: string;
 
     @Column({
         type: 'enum',
         enum: UserRole,
         default: UserRole.USER
     })
-    role!: UserRole;
+    role?: UserRole;
 
     @CreateDateColumn()
     createdAt!: Date;
 
     // One-to-Many relationship with Character (users can own multiple characters)
     @OneToMany(() => Character, character => character.createdBy)
-    characters!: Character[];
+    characters?: Character[];
 
     @ManyToMany(() => Item)
         @JoinTable()
-        items!: Item[];
+        items?: Item[];
 }

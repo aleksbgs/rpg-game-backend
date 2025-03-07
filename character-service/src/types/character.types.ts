@@ -56,6 +56,7 @@ export interface ItemGiftRequest {
 export interface CharacterJwtPayload {
     characterId: string;
     ownerId: string;
+    username: string;
     role: UserRole;
     iat?: number;
     exp?: number;

@@ -5,9 +5,12 @@ export class Class {
     @PrimaryGeneratedColumn('uuid')
     id!: string;
 
-    @Column({ unique: true })
+    @Column()
     name!: string;
 
     @Column()
     description!: string;
+
+    @Column()
+    classId!: string;
 }

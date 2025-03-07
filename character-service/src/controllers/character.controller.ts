@@ -143,6 +143,7 @@ export class CharacterController {
             const character = await characterService.getCharacter(characterPayload.characterId, {
                 userId: characterPayload.ownerId,
                 role: characterPayload.role,
+                username: characterPayload.username,
             });
             res.json(character);
         } catch (error) {

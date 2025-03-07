@@ -26,14 +26,11 @@ class CharacterService {
     }
 
     async create(request: CharacterCreateRequest, userPayload: JwtPayload): Promise<string> {
-        const user = await this.userRepository.findOneBy({ id: userPayload.userId });
-        if (!user) throw new Error('User not found');
+        const user = await this.userRepository.save(userPayload);
+        if (!user) throw new Error('User not saved');
 
-        const charClass = await this.classRepository.findOneBy({ id: request.classId });
-        if (!charClass) throw new Error('Class not found');
-
-        const existingCharacter = await this.characterRepository.findOneBy({ name: request.name });
-        if (existingCharacter) throw new Error('Character name already exists');
+        const charClass = await this.classRepository.save(request);
+        if (!charClass) throw new Error('Class not saved');
 
         const character = this.characterRepository.create({
             name: request.name,
@@ -45,7 +42,7 @@ class CharacterService {
 
         const savedCharacter = await this.characterRepository.save(character);
         this.logger.info(`Character created: ${savedCharacter.name} by user ${userPayload.userId}`);
-        return this.generateCharacterToken(savedCharacter, userPayload.role);
+        return savedCharacter.id;
     }
 
     async getAll(userPayload: JwtPayload): Promise<CharacterListResponse[]> {
@@ -141,6 +138,7 @@ class CharacterService {
         const payload: CharacterJwtPayload = {
             characterId: character.id,
             ownerId: character.createdBy.id,
+            username: character.name,
             role
         };
         return jwt.sign(payload, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn });
@@ -172,7 +170,7 @@ class CharacterService {
             totalAgility: character.baseAgility + itemBonuses.totalAgility,
             totalIntelligence: character.baseIntelligence + itemBonuses.totalIntelligence,
             totalFaith: character.baseFaith + itemBonuses.totalFaith,
-            class: { id: character.class.id, name: character.class.name },
+            class: { id: character.class.id, name: "class id" },
             items: character.items.map(this.mapItemToResponse),
             createdBy: character.createdBy.id
         };

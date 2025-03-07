@@ -28,7 +28,7 @@ class AccountService {
     }
 
     private generateToken(user: User): string {
-        const payload: JwtPayload = { userId: user.id, role: user.role };
+        const payload: JwtPayload = { userId: user.id, role: user.role, username :user.username };
         return jwt.sign(payload, "1234", { expiresIn: JWT_CONFIG.expiresIn });
     }
 
