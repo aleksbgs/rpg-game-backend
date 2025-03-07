@@ -15,8 +15,8 @@ export class CharacterController {
         try {
             const request: CharacterCreateRequest = req.body;
             const userPayload = req.user!; // JwtPayload from authenticateToken
-            const characterToken = await characterService.create(request, userPayload);
-            res.status(201).json({token: characterToken});
+            const userId = await characterService.create(request, userPayload);
+            res.status(201).json({userId: userId});
         } catch (error) {
             if (error instanceof Error) {
                 res.status(401).json({ error: error.message });
