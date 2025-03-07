@@ -18,7 +18,11 @@ export class CharacterController {
             const characterToken = await characterService.create(request, userPayload);
             res.status(201).json({token: characterToken});
         } catch (error) {
-            res.status(400).json({error: error});
+            if (error instanceof Error) {
+                res.status(401).json({ error: error.message });
+            } else {
+                res.status(401).json({ error: "An unknown error occurred" });
+            }
         }
     }
 
@@ -29,7 +33,11 @@ export class CharacterController {
             const characters = await characterService.getAll(userPayload);
             res.json(characters);
         } catch (error) {
-            res.status(403).json({error: error});
+            if (error instanceof Error) {
+                res.status(401).json({ error: error.message });
+            } else {
+                res.status(401).json({ error: "An unknown error occurred" });
+            }
         }
     }
 
@@ -41,7 +49,11 @@ export class CharacterController {
             const character = await characterService.getCharacter(id, userPayload);
             res.json(character);
         } catch (error) {
-            res.status(404).json({error: error});
+            if (error instanceof Error) {
+                res.status(401).json({ error: error.message });
+            } else {
+                res.status(401).json({ error: "An unknown error occurred" });
+            }
         }
     }
 
@@ -53,7 +65,11 @@ export class CharacterController {
             const itemId = await characterService.createItem(request, userPayload);
             res.status(201).json({itemId});
         } catch (error) {
-            res.status(403).json({error: error});
+            if (error instanceof Error) {
+                res.status(401).json({ error: error.message });
+            } else {
+                res.status(401).json({ error: "An unknown error occurred" });
+            }
         }
     }
 
@@ -64,7 +80,11 @@ export class CharacterController {
             const items = await characterService.getItems(userPayload);
             res.json(items);
         } catch (error) {
-            res.status(403).json({error: error});
+            if (error instanceof Error) {
+                res.status(401).json({ error: error.message });
+            } else {
+                res.status(401).json({ error: "An unknown error occurred" });
+            }
 
         }
     }
@@ -76,7 +96,11 @@ export class CharacterController {
             const item = await characterService.getItem(id);
             res.json(item);
         } catch (error) {
-            res.status(404).json({error: error});
+            if (error instanceof Error) {
+                res.status(401).json({ error: error.message });
+            } else {
+                res.status(401).json({ error: "An unknown error occurred" });
+            }
         }
     }
 
@@ -88,7 +112,11 @@ export class CharacterController {
             await characterService.grantItem(request, userPayload);
             res.status(204).send();
         } catch (error) {
-            res.status(400).json({error: error});
+            if (error instanceof Error) {
+                res.status(401).json({ error: error.message });
+            } else {
+                res.status(401).json({ error: "An unknown error occurred" });
+            }
         }
     }
 
@@ -100,7 +128,11 @@ export class CharacterController {
             await characterService.giftItem(request, userPayload);
             res.status(204).send();
         } catch (error) {
-            res.status(400).json({error: error});
+            if (error instanceof Error) {
+                res.status(401).json({ error: error.message });
+            } else {
+                res.status(401).json({ error: "An unknown error occurred" });
+            }
         }
     }
 
@@ -114,7 +146,11 @@ export class CharacterController {
             });
             res.json(character);
         } catch (error) {
-            res.status(404).json({error: error});
+            if (error instanceof Error) {
+                res.status(401).json({ error: error.message });
+            } else {
+                res.status(401).json({ error: "An unknown error occurred" });
+            }
         }
     }
 }

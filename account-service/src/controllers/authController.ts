@@ -11,7 +11,11 @@ export class AuthController {
             const token = await accountService.register(username, password, role || UserRole.USER);
             res.status(201).json({ token });
         } catch (error) {
-            res.status(400).json({ error: error });
+            if (error instanceof Error) {
+                res.status(401).json({ error: error.message });
+            } else {
+                res.status(401).json({ error: "An unknown error occurred" });
+            }
         }
     }
 
@@ -21,7 +25,11 @@ export class AuthController {
             const token = await accountService.login(loginRequest);
             res.json({ token });
         } catch (error) {
-            res.status(401).json({ error: error });
+            if (error instanceof Error) {
+                res.status(401).json({ error: error.message });
+            } else {
+                res.status(401).json({ error: "An unknown error occurred" });
+            }
         }
     }
 }

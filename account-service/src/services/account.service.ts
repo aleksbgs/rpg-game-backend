@@ -29,7 +29,7 @@ class AccountService {
 
     private generateToken(user: User): string {
         const payload: JwtPayload = { userId: user.id, role: user.role };
-        return jwt.sign(payload, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn });
+        return jwt.sign(payload, "1234", { expiresIn: JWT_CONFIG.expiresIn });
     }
 
     verifyToken(token: string): JwtPayload {
