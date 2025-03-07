@@ -27,4 +27,7 @@ export class Item {
     @ManyToMany(() => User)
     @JoinTable()
     users!: User[];
+
+    @Column()
+    userId?: string;
 }

@@ -3,6 +3,7 @@ import { UserRole } from './auth.types';
 export interface CharacterCreateRequest {
     name: string;
     classId: string;
+    userId: string;
 }
 
 export interface CharacterResponse {
@@ -31,6 +32,7 @@ export interface ItemCreateRequest {
     bonusAgility?: number;
     bonusIntelligence?: number;
     bonusFaith?: number;
+    userId?: string;
 }
 
 export interface ItemResponse {
@@ -41,6 +43,7 @@ export interface ItemResponse {
     bonusAgility: number;
     bonusIntelligence: number;
     bonusFaith: number;
+    userId?: string;
 }
 
 export interface ItemGrantRequest {

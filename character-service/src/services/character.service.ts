@@ -26,8 +26,10 @@ class CharacterService {
     }
 
     async create(request: CharacterCreateRequest, userPayload: JwtPayload): Promise<string> {
+        
         const user = await this.userRepository.save(userPayload);
-        if (!user) throw new Error('User not saved');
+    
+        request.userId = userPayload.userId;
 
         const charClass = await this.classRepository.save(request);
         if (!charClass) throw new Error('Class not saved');
@@ -37,7 +39,8 @@ class CharacterService {
             class: charClass,
             createdBy: user,
             createdAt: new Date(),
-            items: []
+            items: [],
+            userId: userPayload.userId
         });
 
         const savedCharacter = await this.characterRepository.save(character);
@@ -86,6 +89,7 @@ class CharacterService {
             ...request,
             name: this.generateItemName(request)
         });
+        item.userId = userPayload.userId;
         const savedItem = await this.itemRepository.save(item);
         this.logger.info(`Item created: ${savedItem.name} by user ${userPayload.userId}`);
         return savedItem.id;
@@ -116,13 +120,13 @@ class CharacterService {
     }
 
     async giftItem(request: ItemGiftRequest, userPayload: JwtPayload): Promise<void> {
-        const fromCharacter = await this.characterRepository.findOne({ where: { id: request.fromCharacterId }, relations: ['items', 'createdBy'] });
-        const toCharacter = await this.characterRepository.findOne({ where: { id: request.toCharacterId }, relations: ['items'] });
+        const fromCharacter = await this.characterRepository.findOne({ where: { userId: request.fromCharacterId }, relations: ['items', 'createdBy'] });
+        const toCharacter = await this.characterRepository.findOne({ where: { userId: request.toCharacterId }, relations: ['items'] });
         const item = await this.itemRepository.findOneBy({ id: request.itemId });
-
+        //TODO:  I don't know why it's not working 
         if (!fromCharacter || !toCharacter || !item) throw new Error('Character or item not found');
-        if (fromCharacter.createdBy.id !== userPayload.userId) throw new Error('Unauthorized');
-        if (!fromCharacter.items.some(i => i.id === item.id)) throw new Error('Item not owned');
+        if (fromCharacter.createdBy.userId !== userPayload.userId) throw new Error('Unauthorized');
+        if (!fromCharacter.items.some(i => i.id === item.userId)) throw new Error('Item not owned'); //character is owner of item for transfer
 
         fromCharacter.items = fromCharacter.items.filter(i => i.id !== item.id);
         toCharacter.items.push(item);
@@ -184,7 +188,8 @@ class CharacterService {
             bonusStrength: item.bonusStrength,
             bonusAgility: item.bonusAgility,
             bonusIntelligence: item.bonusIntelligence,
-            bonusFaith: item.bonusFaith
+            bonusFaith: item.bonusFaith,
+            userId: item.userId
         };
     }
 

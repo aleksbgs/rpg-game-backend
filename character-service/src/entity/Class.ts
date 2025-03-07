@@ -13,4 +13,7 @@ export class Class {
 
     @Column()
     classId!: string;
+
+    @Column()
+    userId?: string;
 }

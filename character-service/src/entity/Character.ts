@@ -40,4 +40,7 @@ export class Character {
 
     @Column()
     createdAt!: Date;
+
+    @Column()
+    userId?: string;
 }
