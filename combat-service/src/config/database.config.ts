@@ -7,6 +7,7 @@ import { Client } from 'pg';
 const schemaName = process.env.DB_COMBAT_SCHEMA || 'combat_schema';
 
 async function ensureCombatSchemaExists() {
+
     const client = new Client({
         host: process.env.DB_HOST || 'localhost',
         port: parseInt(process.env.DB_PORT || '5432'),
@@ -60,6 +61,6 @@ export async function InitializeDatabase() {
 export async function CloseDatabase() {
     if (AppDataSource.isInitialized) {
         await AppDataSource.destroy();
-        console.log('✅ Character Service database connection closed');
+        console.log('✅ Combat Service database connection closed');
     }
 }

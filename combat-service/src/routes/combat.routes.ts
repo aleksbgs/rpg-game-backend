@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { CombatController } from '../controller/CombatConttroller';
+import { CombatController } from '../controller/combat.controller';
 import { authenticateToken } from '../middleware/auth';
 
 const router = Router();

@@ -1,3 +1,0 @@
-{"level":"error","message":"Error starting service: QueryFailedError: schema \"combat_schema\" does not exist","timestamp":"2025-03-08T11:21:40.516Z"}
-{"level":"info","message":"Database initialized","timestamp":"2025-03-08T11:24:44.388Z"}
-{"level":"info","message":"Combat Service running on port 3002","timestamp":"2025-03-08T11:24:44.390Z"}
