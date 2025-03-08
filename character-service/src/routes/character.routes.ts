@@ -3,15 +3,15 @@ import { CharacterController } from '../controllers/character.controller';
 import { authenticateToken } from '../middleware/auth';
 
 const router = Router();
-const controller = new CharacterController();
+const characterController = new CharacterController();
 
-router.post('/character', authenticateToken, controller.create.bind(controller));
-router.get('/character', authenticateToken, controller.getAll.bind(controller));
-router.get('/character/:id', authenticateToken, controller.get.bind(controller));
-router.post('/items', authenticateToken, controller.createItem.bind(controller));
-router.get('/items', authenticateToken, controller.getItems.bind(controller));
-router.get('/items/:id', authenticateToken, controller.getItem.bind(controller));
-router.post('/items/grant', authenticateToken, controller.grantItem.bind(controller));
-router.post('/items/gift', authenticateToken, controller.giftItem.bind(controller));
+router.post('/character', authenticateToken, characterController.create.bind(characterController));
+router.get('/character', authenticateToken, characterController.getAll.bind(characterController));
+router.get('/character/:id', authenticateToken, characterController.get.bind(characterController));
+router.post('/items', authenticateToken, characterController.createItem.bind(characterController));
+router.get('/items', authenticateToken, characterController.getItems.bind(characterController));
+router.get('/items/:id', authenticateToken, characterController.getItem.bind(characterController));
+router.post('/items/grant', authenticateToken, characterController.grantItem.bind(characterController));
+router.post('/items/gift', authenticateToken, characterController.giftItem.bind(characterController));
 
 export default router;

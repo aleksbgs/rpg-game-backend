@@ -13,3 +13,11 @@
 {"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T13:59:54.118Z"}
 {"level":"info","message":"Duel 2 started between c681bc34-3d6f-48a5-95aa-daab9a9c90aa and 2","timestamp":"2025-03-08T13:59:58.504Z"}
 {"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T14:00:56.028Z"}
+{"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T14:32:31.811Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T14:35:36.182Z"}
+{"level":"error","message":"Challenge error: QueryFailedError: invalid input syntax for type integer: \"c681bc34-3d6f-48a5-95aa-daab9a9c90aa\"","timestamp":"2025-03-08T14:35:48.574Z"}
+{"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T14:38:39.409Z"}
+{"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T14:52:25.097Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T14:54:05.869Z"}
+{"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T15:26:46.214Z"}
+{"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T15:28:37.280Z"}

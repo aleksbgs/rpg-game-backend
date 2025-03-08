@@ -7,7 +7,7 @@ export class CharacterSync {
     static async getCharacterStats(characterId: number): Promise<CharacterStats> {
         try {
             const response = await axios.get<CharacterStats>(
-                `http://character-service:3001/api/character/${characterId}`,
+                `http://character-service:3002/api/character/${characterId}`,
                 { headers: { Authorization: `Bearer ${process.env.INTERNAL_TOKEN}` } }
             );
             return response.data;

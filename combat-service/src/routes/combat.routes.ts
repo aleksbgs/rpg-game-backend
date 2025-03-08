@@ -3,10 +3,11 @@ import { CombatController } from '../controller/combat.controller';
 import { authenticateToken } from '../middleware/auth';
 
 const router = Router();
+const combatController = new CombatController();
 
-router.post('/challenge', authenticateToken, CombatController.challenge);
-router.post('/:duel_id/attack', authenticateToken, CombatController.attack);
-router.post('/:duel_id/cast', authenticateToken, CombatController.cast);
-router.post('/:duel_id/heal', authenticateToken, CombatController.heal);
+router.post('/challenge', authenticateToken, combatController.challenge.bind(combatController));
+router.post('/attack', authenticateToken, combatController.attack.bind(combatController));
+router.post('/cast', authenticateToken, combatController.cast.bind(combatController));
+router.post('/heal', authenticateToken, combatController.heal.bind(combatController));
 
 export default router;
