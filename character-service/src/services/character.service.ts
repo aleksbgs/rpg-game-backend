@@ -138,15 +138,6 @@ class CharacterService {
         this.logger.info(`Item ${item.name} gifted from ${fromCharacter.name} to ${toCharacter.name}`);
     }
 
-    private generateCharacterToken(character: Character, role: UserRole): string {
-        const payload: CharacterJwtPayload = {
-            characterId: character.id,
-            ownerId: character.createdBy.id,
-            username: character.name,
-            role
-        };
-        return jwt.sign(payload, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn });
-    }
 
     verifyCharacterToken(token: string): CharacterJwtPayload {
         try {
