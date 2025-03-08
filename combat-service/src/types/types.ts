@@ -1,71 +1,82 @@
 // combat-service/src/types.ts
 import { Request } from 'express';
 
-export interface Duel {
-    id: number;
-    challengerId: number;
-    opponentId: number;
-    status: 'active' | 'completed' | 'draw';
-    startedAt: Date;
-    endedAt: Date | null;
-    actions?: DuelAction[];
+// Authentication types
+export enum UserRole {
+  USER = 'User',
+  GAME_MASTER = 'GameMaster'
 }
 
-export interface DuelAction {
-    id: number;
-    duel: Duel;
-    duelId: number;
-    characterId: number;
-    actionType: 'attack' | 'cast' | 'heal';
-    executedAt: Date;
+export interface JwtPayload {
+  userId: string;
+  username: string;
+  role: UserRole;
+  iat?: number;
+  exp?: number;
 }
 
 export interface AuthenticatedRequest extends Request {
-    user?: {
-        userId: number;
-        role: string;
-    };
+  user?: JwtPayload; // Updated to use JwtPayload
+}
+
+export interface Duel {
+  id: number;
+  challengerId: string; // String (UUID)
+  opponentId: string;   // String (UUID)
+  status: 'active' | 'completed' | 'draw';
+  startedAt: Date;
+  endedAt: Date | null;
+  actions?: DuelAction[];
+}
+
+export interface DuelAction {
+  id: number;
+  duel: Duel;
+  duelId: number;      // Integer foreign key
+  characterId: string; // String (UUID)
+  actionType: 'attack' | 'cast' | 'heal';
+  executedAt: Date;
 }
 
 export interface ChallengeRequest {
-    opponentId: number;
+  opponentId: string; // String (UUID)
 }
 
 export interface DuelResponse {
-    id: number;
-    challengerId: number;
-    opponentId: number;
-    status: string;
-    startedAt: string;
-    endedAt: string | null;
+  id: number;
+  challengerId: string;
+  opponentId: string;
+  status: string;
+  startedAt: string;
+  endedAt: string | null;
 }
 
 export interface ActionResponse {
-    message: string;
-    damage?: number;
-    healing?: number;
+  message: string;
+  damage?: number;
+  healing?: number;
 }
 
 export interface ErrorResponse {
-    message: string;
+  message: string;
 }
 
 export interface CharacterStats {
-    id: number;
-    health: number;
-    baseStrength: number;
-    baseAgility: number;
-    baseIntelligence: number;
-    baseFaith: number;
-    items: Item[];
+  id: string; // String (UUID)
+  health: number;
+  baseStrength: number;
+  baseAgility: number;
+  baseIntelligence: number;
+  baseFaith: number;
+  items: Item[];
 }
 
 export interface Item {
-    id: number;
-    name: string;
-    description: string;
-    bonusStrength: number;
-    bonusAgility: number;
-    bonusIntelligence: number;
-    bonusFaith: number;
+  id: number;
+  name: string;
+  description: string;
+  bonusStrength: number;
+  bonusAgility: number;
+  bonusIntelligence: number;
+  bonusFaith: number;
 }

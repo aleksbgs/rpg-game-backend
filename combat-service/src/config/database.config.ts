@@ -34,7 +34,7 @@ export const AppDataSource = new DataSource({
     logging: process.env.NODE_ENV === 'production',
     entities: [Duel,DuelAction],
     migrations: ['src/migrations/*.ts'],
-    migrationsRun: true,
+    migrationsRun: false,
     extra: {
         schema: schemaName,
     },

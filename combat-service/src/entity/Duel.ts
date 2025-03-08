@@ -3,16 +3,17 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from 't
 import { DuelAction } from './DuelAction';
 import { Duel as DuelType } from '../types/types';
 
-@Entity('duels')
+@Entity('duels', { schema: 'combat_schema' })
 export class Duel extends BaseEntity implements DuelType {
     @PrimaryGeneratedColumn()
-    id!: number;
+    id!: number; // Keeping id as integer for auto-incrementing primary key
 
     @Column()
-    challengerId!: number;
+    challengerId!: string;
+
 
     @Column()
-    opponentId!: number;
+    opponentId!: string;
 
     @Column({ default: 'active' })
     status!: 'active' | 'completed' | 'draw';
@@ -25,4 +26,5 @@ export class Duel extends BaseEntity implements DuelType {
 
     @OneToMany(() => DuelAction, action => action.duel)
     actions!: DuelAction[];
+        //user_id todo refactor
 }

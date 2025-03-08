@@ -51,3 +51,15 @@
 {"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T16:16:44.541Z"}
 {"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T16:23:09.191Z"}
 {"level":"info","message":"Duel 9 started between 0ea5b978-c5d7-44c6-80c9-71b64ca98274 and 2","timestamp":"2025-03-08T16:23:47.451Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T16:52:48.808Z"}
+{"level":"info","message":"Duel 1 started between 0ea5b978-c5d7-44c6-80c9-71b64ca98274 and 2","timestamp":"2025-03-08T16:53:47.286Z"}
+{"level":"info","message":"Duel 2 started between 0ea5b978-c5d7-44c6-80c9-71b64ca98274 and 2","timestamp":"2025-03-08T16:53:54.440Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T17:33:40.753Z"}
+{"level":"info","message":"Duel 1 started between bda3dbe2-76a4-4e0d-bf48-2981fab91c94 and 2","timestamp":"2025-03-08T17:37:26.336Z"}
+{"level":"info","message":"Duel 2 started between bda3dbe2-76a4-4e0d-bf48-2981fab91c94 and 2","timestamp":"2025-03-08T17:37:49.710Z"}
+{"level":"error","message":"Attack error: QueryFailedError: invalid input syntax for type integer: \"NaN\"","timestamp":"2025-03-08T17:38:20.440Z"}
+{"level":"error","message":"Attack error: QueryFailedError: invalid input syntax for type integer: \"NaN\"","timestamp":"2025-03-08T17:38:50.400Z"}
+{"level":"error","message":"Attack error: QueryFailedError: invalid input syntax for type integer: \"NaN\"","timestamp":"2025-03-08T17:38:59.193Z"}
+{"level":"error","message":"Attack error: QueryFailedError: invalid input syntax for type integer: \"NaN\"","timestamp":"2025-03-08T17:39:22.792Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T17:39:31.695Z"}
+{"level":"error","message":"Attack error: QueryFailedError: invalid input syntax for type integer: \"NaN\"","timestamp":"2025-03-08T17:39:36.110Z"}

@@ -22,3 +22,29 @@
 {"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T15:26:46.214Z"}
 {"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T15:28:37.280Z"}
 {"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T16:28:04.692Z"}
+{"level":"error","message":"Error starting service: AggregateError","timestamp":"2025-03-08T16:44:58.965Z"}
+{"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T17:41:42.725Z"}
+{"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T17:43:49.258Z"}
+{"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T17:44:11.091Z"}
+{"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T17:44:16.659Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T17:52:03.566Z"}
+{"level":"info","message":"Duel 1 started between bda3dbe2-76a4-4e0d-bf48-2981fab91c94 and 58fa57fc-c458-46d1-acf9-75b52722fab3","timestamp":"2025-03-08T17:53:11.085Z"}
+{"level":"info","message":"Duel 2 started between bda3dbe2-76a4-4e0d-bf48-2981fab91c94 and 58fa57fc-c458-46d1-acf9-75b52722fab3","timestamp":"2025-03-08T17:53:20.874Z"}
+{"level":"error","message":"Attack error: QueryFailedError: invalid input syntax for type integer: \"NaN\"","timestamp":"2025-03-08T17:53:51.705Z"}
+{"level":"error","message":"Attack error: QueryFailedError: invalid input syntax for type integer: \"NaN\"","timestamp":"2025-03-08T17:54:04.065Z"}
+{"level":"error","message":"Attack error: QueryFailedError: invalid input syntax for type integer: \"NaN\"","timestamp":"2025-03-08T17:54:06.492Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T17:54:49.272Z"}
+{"level":"error","message":"Attack error: QueryFailedError: invalid input syntax for type integer: \"NaN\"","timestamp":"2025-03-08T17:54:53.139Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T18:16:29.659Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T18:16:47.005Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T18:16:54.643Z"}
+{"level":"info","message":"Duel 1 started between bda3dbe2-76a4-4e0d-bf48-2981fab91c94 and 58fa57fc-c458-46d1-acf9-75b52722fab3 by gme (GameMaster)","timestamp":"2025-03-08T18:17:17.002Z"}
+{"level":"info","message":"Duel 2 started between bda3dbe2-76a4-4e0d-bf48-2981fab91c94 and 58fa57fc-c458-46d1-acf9-75b52722fab3 by gme (GameMaster)","timestamp":"2025-03-08T18:17:34.542Z"}
+{"level":"error","message":"Attack error: QueryFailedError: invalid input syntax for type integer: \"NaN\"","timestamp":"2025-03-08T18:18:12.871Z"}
+{"level":"error","message":"Attack error: QueryFailedError: invalid input syntax for type integer: \"NaN\"","timestamp":"2025-03-08T18:18:34.107Z"}
+{"level":"error","message":"Failed to fetch character bda3dbe2-76a4-4e0d-bf48-2981fab91c94: Error: getaddrinfo ENOTFOUND character-service","timestamp":"2025-03-08T18:20:19.235Z"}
+{"level":"error","message":"Cast error: Error: getaddrinfo ENOTFOUND character-service","timestamp":"2025-03-08T18:20:19.237Z"}
+{"level":"error","message":"Failed to fetch character bda3dbe2-76a4-4e0d-bf48-2981fab91c94: Error: getaddrinfo ENOTFOUND character-service","timestamp":"2025-03-08T18:20:31.353Z"}
+{"level":"error","message":"Heal error: Error: getaddrinfo ENOTFOUND character-service","timestamp":"2025-03-08T18:20:31.354Z"}
+{"level":"error","message":"Failed to fetch character bda3dbe2-76a4-4e0d-bf48-2981fab91c94: Error: getaddrinfo ENOTFOUND character-service","timestamp":"2025-03-08T18:21:15.885Z"}
+{"level":"error","message":"Attack error: Error: getaddrinfo ENOTFOUND character-service","timestamp":"2025-03-08T18:21:15.886Z"}
