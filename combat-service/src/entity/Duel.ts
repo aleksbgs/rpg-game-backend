@@ -9,7 +9,7 @@ export class Duel extends BaseEntity implements DuelType {
     id!: number;
 
     @Column()
-    challengerId!: string;
+    challengerId!: number;
 
     @Column()
     opponentId!: number;

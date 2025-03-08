@@ -20,7 +20,7 @@ export class CombatController {
             const duel = new Duel();
             if (!userPayload?.userId) {
                 throw new Error("User ID is missing");
-              }
+            }
             duel.challengerId = userPayload.userId;
             duel.opponentId = request.opponentId;
             await AppDataSource.manager.save(duel);
@@ -129,7 +129,7 @@ export class CombatController {
             const characterStats = await CharacterSync.getCharacterStats(req.user!.id);
             characterStats.health = Math.min(characterStats.health + healing, 100);
 
-            await axios.patch(`http://character-service:3001/api/character/${req.user!.id}`,
+            await axios.patch(`http://character-service:3002/api/character/${req.user!.id}`,
                 { health: characterStats.health },
                 { headers: { Authorization: `Bearer ${process.env.INTERNAL_TOKEN}` } }
             );
@@ -165,7 +165,7 @@ export class CombatController {
         const targetStats = await CharacterSync.getCharacterStats(targetId);
         targetStats.health = Math.max(targetStats.health - damage, 0);
 
-        await axios.patch(`http://character-service:3001/api/character/${targetId}`,
+        await axios.patch(`http://character-service:3002/api/character/${targetId}`,
             { health: targetStats.health },
             { headers: { Authorization: `Bearer ${process.env.INTERNAL_TOKEN}` } }
         );

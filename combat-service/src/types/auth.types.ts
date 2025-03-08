@@ -5,7 +5,7 @@ export enum UserRole {
   
   // Payload structure of JWT tokens issued by Account Service
   export interface JwtPayload {
-    userId: string;
+    userId: number;
     username: string;
     role: UserRole;
     iat?: number;
