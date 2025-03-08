@@ -21,3 +21,4 @@
 {"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T14:54:05.869Z"}
 {"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T15:26:46.214Z"}
 {"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T15:28:37.280Z"}
+{"level":"error","message":"Error starting service: QueryFailedError: column \"challengerId\" of relation \"duels\" contains null values","timestamp":"2025-03-08T16:28:04.692Z"}

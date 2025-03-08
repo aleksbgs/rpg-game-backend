@@ -1,5 +1,5 @@
+// combat-service/src/types.ts
 import { Request } from 'express';
-
 
 export interface Duel {
     id: number;
@@ -8,33 +8,28 @@ export interface Duel {
     status: 'active' | 'completed' | 'draw';
     startedAt: Date;
     endedAt: Date | null;
-    actions?: DuelAction[]; // Optional relation
+    actions?: DuelAction[];
 }
-
 
 export interface DuelAction {
     id: number;
     duel: Duel;
-    duelId: number; // For TypeORM relation
+    duelId: number;
     characterId: number;
     actionType: 'attack' | 'cast' | 'heal';
     executedAt: Date;
 }
 
-
-export interface AuthRequest extends Request {
-    user: {
-        id: number;
+export interface AuthenticatedRequest extends Request {
+    user?: {
+        userId: number;
         role: string;
-        username: string;
     };
 }
-
 
 export interface ChallengeRequest {
     opponentId: number;
 }
-
 
 export interface DuelResponse {
     id: number;
@@ -47,14 +42,13 @@ export interface DuelResponse {
 
 export interface ActionResponse {
     message: string;
-    damage?: number; // For attack and cast
-    healing?: number; // For heal
+    damage?: number;
+    healing?: number;
 }
 
 export interface ErrorResponse {
     message: string;
 }
-
 
 export interface CharacterStats {
     id: number;
