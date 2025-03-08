@@ -1,2 +1,12 @@
 {"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T12:44:14.177Z"}
 {"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T12:47:51.974Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T13:08:37.653Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T13:40:27.922Z"}
+{"level":"error","message":"Challenge error: QueryFailedError: invalid input syntax for type integer: \"c681bc34-3d6f-48a5-95aa-daab9a9c90aa\"","timestamp":"2025-03-08T13:40:37.586Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T13:42:48.537Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T13:52:38.945Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T13:53:27.861Z"}
+{"level":"error","message":"Challenge error: QueryFailedError: invalid input syntax for type integer: \"NaN\"","timestamp":"2025-03-08T13:54:12.131Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T13:56:19.296Z"}
+{"level":"info","message":"Combat Service running on port 3003","timestamp":"2025-03-08T13:58:04.199Z"}
+{"level":"info","message":"Duel 1 started between c681bc34-3d6f-48a5-95aa-daab9a9c90aa and 2","timestamp":"2025-03-08T13:58:30.523Z"}

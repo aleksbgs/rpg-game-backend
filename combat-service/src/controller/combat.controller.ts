@@ -7,19 +7,25 @@ import { AuthRequest, ChallengeRequest, DuelResponse, ActionResponse, ErrorRespo
 import { CharacterSync } from '../services/character.sync';
 import logger from '../logger/logger';
 import axios from "axios";
+import {AuthenticatedRequest} from "../middleware/auth";
 
 export class CombatController {
-    static async challenge(req: AuthRequest, res: Response): Promise<void> {
+
+
+    static async challenge(req: AuthenticatedRequest, res: Response): Promise<void> {
         try {
-            const { opponentId } = req.body as ChallengeRequest;
-            const challengerId = req.user!.id;
+            const request:ChallengeRequest = req.body;
+            const userPayload = req.user;
 
             const duel = new Duel();
-            duel.challengerId = challengerId;
-            duel.opponentId = opponentId;
+            if (!userPayload?.userId) {
+                throw new Error("User ID is missing");
+              }
+            duel.challengerId = userPayload.userId;
+            duel.opponentId = request.opponentId;
             await AppDataSource.manager.save(duel);
 
-            logger.info(`Duel ${duel.id} started between ${challengerId} and ${opponentId}`);
+            logger.info(`Duel ${duel.id} started between ${duel.challengerId} and ${duel.opponentId}`);
             res.status(201).json(duel);
 
             setTimeout(async () => {

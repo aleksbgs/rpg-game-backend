@@ -3,7 +3,7 @@ import { Request } from 'express';
 
 export interface Duel {
     id: number;
-    challengerId: number;
+    challengerId: string;
     opponentId: number;
     status: 'active' | 'completed' | 'draw';
     startedAt: Date;
@@ -23,9 +23,10 @@ export interface DuelAction {
 
 
 export interface AuthRequest extends Request {
-    user?: {
+    user: {
         id: number;
         role: string;
+        username: string;
     };
 }
 

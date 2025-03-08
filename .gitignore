@@ -16,3 +16,4 @@ character-service/node_modules
 account-service/node_modules
 combat-service/node_modules
 .DS_Store
+combat-service/combat-service.log
