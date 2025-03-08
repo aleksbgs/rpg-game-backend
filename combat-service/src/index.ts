@@ -13,7 +13,6 @@ async function start() {
     try {
         await InitializeDatabase();
         await initializeRedis();
-        await AppDataSource.runMigrations();
         console.log('Database Combat initialized');
 
         app.listen(3003, () => {

@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { characterService } from '../services/character.service';
-import { AuthenticatedRequest } from '../middleware/auth.middlerare'; // For user token
+import { AuthenticatedRequest } from '../middleware/auth'; // For user token
 import { CharacterAuthenticatedRequest } from '../middleware/character.middleware'; // For character token
 import {
     CharacterCreateRequest,

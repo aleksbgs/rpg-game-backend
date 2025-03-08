@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { CharacterController } from '../controllers/character.controller';
-import { authenticateToken } from '../middleware/auth.middlerare';
+import { authenticateToken } from '../middleware/auth';
 
 const router = Router();
 const controller = new CharacterController();

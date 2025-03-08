@@ -56,11 +56,8 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
       DB_SCHEMA: ${DB_ACCOUNT_SCHEMA}
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
+      REDIS_URL: redis://:redis_password@redis:6379 # Redis connection string
       REDIS_PASSWORD: ${REDIS_PASSWORD}
-      ACCESS_SECRET: ${ACCESS_SECRET}
-      REFRESH_SECRET: ${REFRESH_SECRET}
     networks:
       - app-network
 
@@ -107,9 +104,9 @@ services:
       DB_PORT: 5432
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
-      DB_NAME: ${DB_COMBAT_SCHEMA}
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
+      DB_NAME: ${DB_NAME}
+      DB_SCHEMA: ${DB_COMBAT_SCHEMA}
+      REDIS_URL: redis://:redis_password@redis:6379 # Redis connection string
       REDIS_PASSWORD: ${REDIS_PASSWORD}
     networks:
       - app-network

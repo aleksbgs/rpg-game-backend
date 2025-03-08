@@ -18,7 +18,7 @@ async function ensureAccountSchemaExists() {
     await client.connect();
     let result = await client.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
     await client.end();
-    console.log(`✅ Schema "${schemaName}" ensured in the database.#{result}`);
+    console.log(`✅ Schema "${schemaName}" ensured in the database.${result}`);
 }
 
 // Export the DataSource configuration
@@ -42,10 +42,9 @@ export const AppDataSource = new DataSource({
 
 export async function InitializeDatabase() {
     try {
-        // Step 1: Ensure the schema exists
+
         await ensureAccountSchemaExists();
 
-        // Step 2: Initialize TypeORM after the schema exists
         await AppDataSource.initialize();
 
         if (process.env.NODE_ENV === 'production') {

@@ -10,7 +10,6 @@ async function start() {
     try {
         await InitializeDatabase();
         await initializeRedis();
-        await AppDataSource.runMigrations();
         console.log('Database Characters initialized');
 
         app.use('/api', characterRoutes);
