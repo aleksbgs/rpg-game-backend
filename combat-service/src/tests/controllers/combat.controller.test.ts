@@ -6,7 +6,6 @@ import { AuthenticatedRequest, ChallengeRequest } from '../../types/types';
 import { UserRole } from '../../types/types';
 import { validate } from 'uuid';
 
-// Mock dependencies
 jest.mock('../../config/database.config', () => ({
     AppDataSource: {
         manager: {
