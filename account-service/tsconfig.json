@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "types": ["jest", "node"],
+    "target": "ES2022",
+    "module": "NodeNext",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,  // Required for debugging in WebStorm
+  }
+}
+

@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "account-service"
+		},
+		{
+			"path": "character-service"
+		},
+		{
+			"path": "combat-service"
+		}
+	],
+	"settings": {}
+}
