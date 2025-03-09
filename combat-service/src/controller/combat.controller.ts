@@ -17,7 +17,6 @@ export class CombatController {
                 throw new Error('User ID is missing');
             }
 
-            // Validate that userId and opponentId are UUIDs
             if (!validate(user.userId) || !validate(opponentId)) {
                 res.status(400).json({message: 'Invalid userId or opponentId: must be a UUID'} as ErrorResponse);
                 return;
