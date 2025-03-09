@@ -3,7 +3,7 @@ export enum UserRole {
   GAME_MASTER = 'GameMaster'
 }
 
-// Payload structure of JWT tokens issued by Account Service
+ 
 export interface JwtPayload {
   userId: string;
   username: string;
