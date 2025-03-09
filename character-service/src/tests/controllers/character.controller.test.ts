@@ -1,8 +1,8 @@
 import { Response } from 'express';
-import { CharacterController } from '../../controllers/character.controller'; // Adjusted path
-import { characterService } from '../../services/character.service'; // Adjusted path
-import { AuthenticatedRequest } from '../../middleware/auth'; // Adjusted path
-import { UserRole } from '../../types/auth.types'; // Adjusted path
+import { CharacterController } from '../../controllers/character.controller';  
+import { characterService } from '../../services/character.service';  
+import { AuthenticatedRequest } from '../../middleware/auth';  
+import { UserRole } from '../../types/auth.types'; 
 
 
 jest.mock('../../services/character.service', () => ({
