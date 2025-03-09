@@ -61,7 +61,7 @@ class CharacterService {
 
     async getCharacter(id: string, userPayload: JwtPayload): Promise<CharacterResponse> {
         const cacheKey = `character:${userPayload.userId}`;
-        const cached = await redisClient.get(cacheKey); // Use Redis get
+        const cached = await redisClient.get(cacheKey);  
         if (cached) {
             this.logger.info(`Cache hit for character: ${userPayload.userId}`);
             return JSON.parse(cached) as CharacterResponse;
@@ -78,7 +78,7 @@ class CharacterService {
         }
 
         const response = this.mapToResponse(character);
-        await redisClient.setEx(cacheKey, 300, JSON.stringify(response)); // Use Redis setEx (5 minutes TTL)
+        await redisClient.setEx(cacheKey, 300, JSON.stringify(response));  
         this.logger.info(`Cache miss - stored character: ${id}`);
         return response;
     }
@@ -115,7 +115,7 @@ class CharacterService {
 
         character.items.push(item);
         await this.characterRepository.save(character);
-        await redisClient.del(`character:${character.id}`); // Use Redis del
+        await redisClient.del(`character:${character.id}`);  
         this.logger.info(`Item ${item.name} granted to character ${character.name}`);
     }
 
