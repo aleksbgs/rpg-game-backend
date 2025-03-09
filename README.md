@@ -39,6 +39,10 @@ Manages battle mechanics between characters.
 
 Installation & Setup
 
+Use postman collection from root of project
+I create token with unlimited time to play arround 
+Use test-duel.zsh for fight testing 
+
 Prerequisites
 
 Install Docker and Docker Compose
