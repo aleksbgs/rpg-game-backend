@@ -1,5 +1,7 @@
 RPG Game Backend
 
+Start Project with docker-compose up -d
+
 Overview
 
 This is a backend system for an RPG game, built using a microservices architecture. The backend consists of multiple services, each responsible for different functionalities within the game.
