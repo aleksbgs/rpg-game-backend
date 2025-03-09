@@ -3,7 +3,7 @@ import { Character } from '../entity/Character';
 import { Class } from "../entity/Class";
 import { Item } from "../entity/Item";
 import { User } from "../entity/User";
-import { Client } from 'pg'; // Import 'pg' for raw database connection
+import { Client } from 'pg'; 
 
 
 const schemaName = process.env.DB_CHARACTER_SCHEMA || 'character_schema';
