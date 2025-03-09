@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { CombatController } from '../controller/combat.controller';
-import { authenticateToken } from '../middleware/auth'; // Adjusted path
+import { authenticateToken } from '../middleware/auth'; 
 
 const router = Router();
 const combatController = new CombatController();
